@@ -1,0 +1,26 @@
+.machinesContainer {
+  margin: 50px 25%;
+}
+
+.tableItem__field {
+  margin: 10px 0;
+}
+
+.tableItem__atribute {
+  font-weight: bold;
+}
+
+.showLogsButton {
+  height: 35px;
+  width: 125px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #264673;
+  color: white;
+  font-weight: 600;
+}
+
+
+.machines__title {
+
+}
