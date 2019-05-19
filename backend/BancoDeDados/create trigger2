@@ -1,0 +1,4 @@
+CREATE TRIGGER status_update
+    AFTER INSERT ON log
+    FOR EACH ROW
+    EXECUTE PROCEDURE log_last_name_changes();
