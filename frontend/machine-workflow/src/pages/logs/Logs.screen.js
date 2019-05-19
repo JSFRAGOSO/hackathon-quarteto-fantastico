@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import axios from 'axios'
 
-import { TableItem } from '../../components'
+import { TableItem, Graph } from '../../components'
 
 class LogsScreen extends PureComponent {
 
@@ -59,12 +59,18 @@ class LogsScreen extends PureComponent {
           timecliclemessage: '',
           status: ''
         }
-      ]
+      ],
+
+      showLog: false
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {}
     // pl
+  onVerLogsClick = () => {
+    this.setState({
+      showLog: !this.state.showLog
+    })
   }
 
   renderMachines = () => {
@@ -91,9 +97,19 @@ class LogsScreen extends PureComponent {
     return (
       <div className='machinesContainer'>
         <h1 className='machinesContainer__title'>Logs da máquina</h1>
+        <button className='showLogsButton' onClick={this.onVerLogsClick}>{this.state.showLog ? 'Ver gráficos' : 'Ver logs'}</button>
+        {this.state.showLog ?
         <div className='machinesContainer__tableContainer'>
           {this.renderMachines()}
-        </div>
+        </div> :
+        <>
+        <h2>Temperatura</h2>
+        <Graph />
+        <h2>Quantidade de ciclos</h2>
+        <Graph />
+        <h2>Vibrações</h2>
+        <Graph />
+        </>}
       </div>
     );
   }
