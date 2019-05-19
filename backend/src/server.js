@@ -68,14 +68,21 @@ app.get('/validaTemperatura/:codMachine/:temperature', (req, res) => {
         var idMachine = resp.rows[0].idmachine 
         
         
-        if (temp >= resp.rows[0].minimum && temp <= resp.rows[0].maximum){
+        if (parseFloat(temp) >= (parseFloat(resp.rows[0].minimum) + parseFloat(resp.rows[0].minimum * 0.2))  && (parseFloat(temp) <= parseFloat(resp.rows[0].maximum * 0.8))){
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',NULL,'',${temp},'',NULL,'','NORMAL')`, (err, resp) => {})
                                 
                                 res.send({succsess:"succsess"})
                                 
                                 
-        }else{
+        }
+        else if (parseInt(temp) <= parseInt(resp.rows[0].maximum) && parseInt(temp) >= parseInt(resp.rows[0].minimum)) {
+            client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
+                                values (${idMachine},'${dateTime}',NULL,'',${temp},'',NULL,'Em risco')`, (err, resp) => {})
+                                res.send({succsess:"Em risco"})
+        }     
+        
+        else{
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',NULL,'',${temp},'Temperatura fora dos limites',NULL,'','CRITICO')`, (err, resp) => {})
                                 res.send({Erro:"Temperatura fora dos limites"})
@@ -111,12 +118,19 @@ app.get('/validaVibracoes/:codMachine/:vibration', (req, res) => {
         console.log(respons.rows[0].minimum)
         console.log(respons.rows[0].maximum)
         // /(vib => resp.rows[0].minimum) && (vib <= resp.rows[0].maximum)
-        if (parseFloat(vib) <= parseFloat(respons.rows[0].maximum) && parseFloat(vib) >= parseFloat(respons.rows[0].minimum)){
+        if (parseFloat(vib) <= (parseFloat(respons.rows[0].maximum * 0.8)) && parseFloat(vib) >= (parseFloat(respons.rows[0].minimum) + parseFloat(respons.rows[0].minimum * 0.2))){
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',${vib},'',NULL,'',NULL,'','NORMAL')`, (err, resp) => {})
                                 res.send({succsess:"succsess"})
-        }else{
+        }
+        else if (parseFloat(vib) <= parseFloat(respons.rows[0].maximum) && parseFloat(vib) >= parseFloat(respons.rows[0].minimum)) {
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
+                                values (${idMachine},'${dateTime}',${vib},'',NULL,'',NULL,'Em risco')`, (err, resp) => {})
+                                res.send({succsess:"Em risco"})
+        }        
+        
+        else{
+                client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',${vib},'Vibrações fora dos limites',NULL,'',NULL,'','CRITICO')`, (err, resp) => {})
                                 res.send({Erro:"Vibrações fora dos limites"})
         }
@@ -147,15 +161,23 @@ app.get('/validaCiclos/:codMachine/:cycles', (req, res) => {
         
         var idMachine = respons.rows[0].idmachine
         
-        console.log(cic)
-        console.log(respons.rows[0].minimum)
-        console.log(respons.rows[0].maximum)
+        //console.log(cic)
+        //console.log(respons.rows[0].minimum)
+        //console.log(respons.rows[0].maximum)
         // /(vib => resp.rows[0].minimum) && (vib <= resp.rows[0].maximum)
-        if (cic <= respons.rows[0].maximum && cic >= respons.rows[0].minimum){
+        if (parseFloat(cic) <= (parseFloat(respons.rows[0].maximum * 0.8)) && parseFloat(cic) >= (parseFloat(respons.rows[0].minimum) + parseInt(respons.rows[0].minimum * 0.2))){
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',NULL,'',NULL,'',${cic},'NORMAL')`, (err, resp) => {})
                                 res.send({succsess:"succsess"})
-        }else{
+        }
+
+        else if (parseInt(cic) <= parseInt(respons.rows[0].maximum) && parseInt(cic) >= parseInt(respons.rows[0].minimum)) {
+            client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
+                                values (${idMachine},'${dateTime}',NULL,'',NULL,'',${cic},'Em risco')`, (err, resp) => {})
+                                res.send({succsess:"Em risco"})
+        }
+        
+        else{
             client.query(`INSERT INTO log (idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege,status)
                                 values (${idMachine},'${dateTime}',NULL,'Ciclos fora dos limites',NULL,'',${cic},'CRITICO')`, (err, resp) => {})
                                 res.send({Erro:"Ciclos fora dos limites"})
