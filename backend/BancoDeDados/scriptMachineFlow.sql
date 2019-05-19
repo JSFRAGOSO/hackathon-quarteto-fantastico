@@ -50,3 +50,4 @@ CREATE DATABASE machineworkflow
         timeciclemessege varchar
     )
     
+    ALTER TABLE machine ADD status varchar; 
