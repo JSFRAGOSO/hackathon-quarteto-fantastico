@@ -7,7 +7,7 @@ var client = {}
 
 function connectDb(){
     
-    const connectionString = 'postgressql://postgres:1234@localhost:5432/machineworkflow'
+    const connectionString = 'postgressql://postgres:ops4ever@localhost:5432/machineworkflow'
 
     client = new Client({
         connectionString: connectionString
@@ -32,9 +32,8 @@ app.post('/log', (req,res) => {
     connectDb()
     client.query(`INSERT INTO log (id, idmachine, dhcreated, vibration, vibrationmessege, temperature, temperaturemessege, timecicle, timeciclemessege)
                                 values (1,1,'2019-05-19',10,'',20,'${req.body.id}',NULL,'')`, (err, resp) => {
-       console.log(err,resp)
         client.end()
-        res.send({succsess: req.body.id})
+        res.send({err,resp})
    })
 })
 

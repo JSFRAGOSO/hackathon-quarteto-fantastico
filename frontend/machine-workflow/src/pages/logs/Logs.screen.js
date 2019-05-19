@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+import axios from 'axios'
+
 import { TableItem } from '../../components'
 
 class LogsScreen extends PureComponent {
@@ -11,7 +13,7 @@ class LogsScreen extends PureComponent {
       logs: [
         {
           name: 'JJDHEH2334HJ23332',
-          idmachine: 1,
+          idmachine: 1001,
           dhcreated: '19/05/2019',
           vibration: 4000,
           vibrationmessage: '',
@@ -23,7 +25,7 @@ class LogsScreen extends PureComponent {
         },
         {
           name: 'JJDHEH2334HJ23332',
-          idmachine: 1,
+          idmachine: 1001,
           dhcreated: '19/05/2019',
           vibration: 4000,
           vibrationmessage: '',
@@ -35,7 +37,7 @@ class LogsScreen extends PureComponent {
         },
         {
           name: 'JJDHEH2334HJ23332',
-          idmachine: 1,
+          idmachine: 1001,
           dhcreated: '19/05/2019',
           vibration: 4000,
           vibrationmessage: '',
@@ -47,7 +49,7 @@ class LogsScreen extends PureComponent {
         },
         {
           name: 'JJDHEH2334HJ23332',
-          idmachine: 1,
+          idmachine: 1001,
           dhcreated: '19/05/2019',
           vibration: 4000,
           vibrationmessage: '',
@@ -61,9 +63,12 @@ class LogsScreen extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    // pl
+  }
+
   renderMachines = () => {
-    const machineLogs = this.state.logs.filter(log => (log.idmachine == window.location.pathname.substr(window.location.pathname.length - 1, window.location.pathname.length - 1)))
-    return machineLogs.length != 0 ? machineLogs.map(log => (<TableItem object={log}>
+    return this.state.logs.map(log => (<TableItem object={log}>
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Data do log: </span> {log.dhcreated}
       </div>
@@ -79,7 +84,7 @@ class LogsScreen extends PureComponent {
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Status: </span> {log.status == 'warn' ? 'Alerta' : log.status == 'alert' ? 'Crítico' : 'Normal'}
       </div>
-    </TableItem>)) : <h2>Não foram encontrados logs para está máquina</h2>
+    </TableItem>))
   }
 
   render() {
