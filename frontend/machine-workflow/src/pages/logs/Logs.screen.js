@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { TableItem } from '../../components'
+import { TableItem, Graph } from '../../components'
 
 class LogsScreen extends PureComponent {
 
@@ -89,6 +89,7 @@ class LogsScreen extends PureComponent {
         <div className='machinesContainer__tableContainer'>
           {this.renderMachines()}
         </div>
+        <Graph />
       </div>
     );
   }
