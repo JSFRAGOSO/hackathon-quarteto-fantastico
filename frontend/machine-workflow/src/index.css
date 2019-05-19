@@ -1,4 +1,9 @@
 body {
+  width: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+}
+
+html {
+  width: 100%;
 }
