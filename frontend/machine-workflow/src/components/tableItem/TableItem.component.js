@@ -18,12 +18,12 @@ class TableItem extends Component {
 
   render() {
     const { object, children } = this.props
-    const { name, status } = object
+    const { name, status, id } = object
 
     return (
       <>
-        <div className={`tableItem ${status == 'warn' && 'warn'} ${status == 'alert' && 'alert'}`} onClick={this.changeShowInfoClick}>
-          <span>{name}</span>
+        <div className={`tableItem ${status == 'Em risco' && 'warn'} ${status == 'CRITICO' && 'alert'}`} onClick={this.changeShowInfoClick}>
+          <span>{name ? name : `${id} passou pelo estado ${status}`}</span>
         </div>
         <div className={`tableItem__info ${this.state.showInfo ? 'show' : ''}`}>
           {children}
