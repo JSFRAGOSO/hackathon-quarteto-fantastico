@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  height: 50px;
+  max-width: 100%;
+  padding: 20px 50px;
+  background-color: #264673  ;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
