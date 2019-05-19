@@ -10,63 +10,21 @@ class LogsScreen extends PureComponent {
     super()
 
     this.state = {
-      logs: [
-        {
-          name: 'JJDHEH2334HJ23332',
-          idmachine: 1001,
-          dhcreated: '19/05/2019',
-          vibration: 4000,
-          vibrationmessage: '',
-          temperature: 90,
-          temperaturemessage: '',
-          timecicle: 100,
-          timecliclemessage: '',
-          status: 'warn'
-        },
-        {
-          name: 'JJDHEH2334HJ23332',
-          idmachine: 1001,
-          dhcreated: '19/05/2019',
-          vibration: 4000,
-          vibrationmessage: '',
-          temperature: 90,
-          temperaturemessage: '',
-          timecicle: 100,
-          timecliclemessage: '',
-          status: 'alert'
-        },
-        {
-          name: 'JJDHEH2334HJ23332',
-          idmachine: 1001,
-          dhcreated: '19/05/2019',
-          vibration: 4000,
-          vibrationmessage: '',
-          temperature: 90,
-          temperaturemessage: '',
-          timecicle: 100,
-          timecliclemessage: '',
-          status: ''
-        },
-        {
-          name: 'JJDHEH2334HJ23332',
-          idmachine: 1001,
-          dhcreated: '19/05/2019',
-          vibration: 4000,
-          vibrationmessage: '',
-          temperature: 90,
-          temperaturemessage: '',
-          timecicle: 100,
-          timecliclemessage: '',
-          status: ''
-        }
-      ],
+      logs: [ ],
 
       showLog: false
     }
   }
 
-  componentDidMount() {}
-    // pl
+  componentDidMount() {
+    axios.get(`http://localhost:8002/machineLog/${ window.location.pathname.substr(window.location.pathname.length - 4, window.location.pathname.length)}`).then(resp => {
+      console.log(resp)
+      this.setState({
+       logs: resp.data
+      })
+    })
+  }
+  
   onVerLogsClick = () => {
     this.setState({
       showLog: !this.state.showLog
@@ -74,21 +32,21 @@ class LogsScreen extends PureComponent {
   }
 
   renderMachines = () => {
-    return this.state.logs.map(log => (<TableItem object={log}>
+    return this.state.logs.reverse().map(log => (<TableItem object={log}>
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Data do log: </span> {log.dhcreated}
       </div>
-      <div className='tableItem__field'>
+      {log.vibration && <div className='tableItem__field'>
         <span className='tableItem__atribute'>Vibração: </span> {log.vibration}
-      </div>
-      <div className='tableItem__field'>
+      </div>}
+      {log.temperature && <div className='tableItem__field'>
         <span className='tableItem__atribute'>Temperatura: </span> {log.temperature}
-      </div>
-      <div className='tableItem__field'>
+      </div>}
+      {log.timecicle &&  <div className='tableItem__field'>
         <span className='tableItem__atribute'>Tempo do clico: </span> {log.timecicle}
-      </div>
+      </div>}
       <div className='tableItem__field'>
-        <span className='tableItem__atribute'>Status: </span> {log.status == 'warn' ? 'Alerta' : log.status == 'alert' ? 'Crítico' : 'Normal'}
+        <span className='tableItem__atribute'>Status: </span> {log.status == 'Em risco' ? 'Alerta' : log.status == 'CRITICO' ? 'Crítico' : 'Normal'}
       </div>
     </TableItem>))
   }

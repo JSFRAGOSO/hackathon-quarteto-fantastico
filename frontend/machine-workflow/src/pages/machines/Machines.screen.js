@@ -29,7 +29,7 @@ class MachinesScreen extends Component {
   }
 
   renderMachines = () => {
-    return this.state.machines.map(machine => (<TableItem object={machine}>
+    return this.state.machines.reverse().map(machine => (<TableItem object={machine}>
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Nome: </span> {machine.name}
       </div>
@@ -40,7 +40,7 @@ class MachinesScreen extends Component {
         <span className='tableItem__atribute'>Data de fabricação: </span> {machine.manufactureyear}
       </div>
       <div className='tableItem__field'>
-        <span className='tableItem__atribute'>Status: </span> {machine.status == 'warn' ? 'Alerta' : machine.status == 'alert' ? 'Crítico' : 'Normal'}
+        <span className='tableItem__atribute'>Status: </span> {machine.status == 'Em risco' ? 'Alerta' : machine.status == 'CRITICO' ? 'Crítico' : 'Normal'}
       </div>
       <button className='showLogsButton' onClick={() => this.onVerLogsClick(machine.idmachine)}>Ver logs</button>
     </TableItem>))
