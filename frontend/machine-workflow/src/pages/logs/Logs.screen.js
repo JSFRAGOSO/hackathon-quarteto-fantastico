@@ -57,13 +57,20 @@ class LogsScreen extends PureComponent {
           timecliclemessage: '',
           status: ''
         }
-      ]
+      ],
+
+      showLog: false
     }
   }
 
+  onVerLogsClick = () => {
+    this.setState({
+      showLog: !this.state.showLog
+    })
+  }
+
   renderMachines = () => {
-    const machineLogs = this.state.logs.filter(log => (log.idmachine == window.location.pathname.substr(window.location.pathname.length - 1, window.location.pathname.length - 1)))
-    return machineLogs.length != 0 ? machineLogs.map(log => (<TableItem object={log}>
+    return this.state.logs.map(log => (<TableItem object={log}>
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Data do log: </span> {log.dhcreated}
       </div>
@@ -79,17 +86,26 @@ class LogsScreen extends PureComponent {
       <div className='tableItem__field'>
         <span className='tableItem__atribute'>Status: </span> {log.status == 'warn' ? 'Alerta' : log.status == 'alert' ? 'Crítico' : 'Normal'}
       </div>
-    </TableItem>)) : <h2>Não foram encontrados logs para está máquina</h2>
+    </TableItem>))
   }
 
   render() {
     return (
       <div className='machinesContainer'>
         <h1 className='machinesContainer__title'>Logs da máquina</h1>
+        <button className='showLogsButton' onClick={this.onVerLogsClick}>{this.state.showLog ? 'Ver gráficos' : 'Ver logs'}</button>
+        {this.state.showLog ?
         <div className='machinesContainer__tableContainer'>
           {this.renderMachines()}
-        </div>
+        </div> :
+        <>
+        <h2>Temperatura</h2>
         <Graph />
+        <h2>Quantidade de ciclos</h2>
+        <Graph />
+        <h2>Vibrações</h2>
+        <Graph />
+        </>}
       </div>
     );
   }
